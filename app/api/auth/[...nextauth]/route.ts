@@ -11,22 +11,27 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session, user, token }: any) {
+      console.log("-----------------session------------------");
       console.log("session", session);
       console.log("user", user);
       console.log("token", token);
-      session.user = token.user || user;
+      session.user.roles = token.roles;
       return session;
     },
 
     async jwt({ token, user, account, profile, session }: any) {
-      const roles = (profile && profile["http://localhost:3000/roles"]) || [];
+      console.log("-----------------jwt------------------");
+      const roles =
+        token.roles ||
+        (profile && profile["http://localhost:3000/roles"]) ||
+        [];
       const name = token.name || profile.name;
       console.log("jwt", token);
       console.log("account", account);
       console.log("profile", profile);
       console.log("session", session);
       console.log("user", user);
-      token.user = { roles, name };
+      token.roles = roles;
       return token;
     },
   },

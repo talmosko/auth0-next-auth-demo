@@ -7,5 +7,9 @@ export default function Page() {
   if (status === "unauthenticated") return <p>Access Denied</p>;
   if (status === "loading") return <p>loading....</p>;
 
-  return <h1>Hello, {data.user.name}</h1>;
+  return (
+    <h1>
+      Hello, {data.user.name} {data.user.roles}
+    </h1>
+  );
 }
